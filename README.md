@@ -13,3 +13,9 @@ docker compose up
 ```bash
 docker compose exec hardhat npx hardhat test
 ```
+
+## Deploy contract on local network
+
+```bash
+docker compose exec hardhat npx hardhat run --network localhost scripts/deploy.js
+```
