@@ -4,8 +4,21 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
+import "./PixelCoin.sol";
+
 contract PixelPic is ERC165, IERC721 {
-    function supportsInterface(bytes4 interfaceId) public view virtual override returns(bool) {
+    address private immutable _pixelCoinContract;
+
+    constructor(address pixelCoinContract) {
+        _pixelCoinContract = pixelCoinContract;
+    }
+
+    function test() public view returns(address) {
+        PixelCoin pixelCoin = PixelCoin(_pixelCoinContract);
+        return pixelCoin.test();
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns(bool) {
         return
             interfaceId == type(IERC721).interfaceId ||
             super.supportsInterface(interfaceId);

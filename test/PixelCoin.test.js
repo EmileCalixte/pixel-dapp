@@ -10,6 +10,9 @@ describe("PixelCoin contract", () => {
     /** @type {Contract} */
     let pixelCoin;
 
+    /** @type {Contract} */
+    let pixelPic;
+
     /** @type {SignerWithAddress} */
     let owner;
 
@@ -21,6 +24,9 @@ describe("PixelCoin contract", () => {
 
         const PixelCoin = await ethers.getContractFactory('PixelCoin', owner);
         pixelCoin = await PixelCoin.deploy();
+
+        const PixelPic = await ethers.getContractFactory("PixelPic", owner);
+        pixelPic = await PixelPic.deploy(pixelCoin.address);
     });
 
     describe("Deployment", () => {
@@ -160,6 +166,18 @@ describe("PixelCoin contract", () => {
 
             // Balance should be unchanged
             expect(await pixelCoin.balanceOf(signers[0].address)).to.equal(100);
+        });
+    });
+
+    describe("Test", () => {
+        it("Test msg.sender", async () => {
+            const msgsender = await pixelPic
+                .connect(signers[0])
+                .test();
+
+            console.log(`PixelPic address: ${pixelPic.address}`);
+            console.log(`Signer address: ${signers[0].address}`);
+            console.log(`Returned msg.sender: ${msgsender}`);
         });
     });
 });

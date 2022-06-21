@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+import "hardhat/console.sol";
+
 contract PixelCoin is IERC20 {
     address private founder;
 
@@ -18,6 +20,11 @@ contract PixelCoin is IERC20 {
     constructor() {
         founder = msg.sender;
         balances[founder] = totalSupply;
+    }
+
+    function test() public view returns (address) {
+        console.log("PixelCoin msg sender: ", msg.sender);
+        return msg.sender;
     }
 
     function balanceOf(address account) external view override returns (uint256 balance) {
